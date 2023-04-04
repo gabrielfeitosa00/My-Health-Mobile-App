@@ -3,9 +3,17 @@ import {StyleSheet} from 'react-native';
 const style = StyleSheet.create({
   title: {
     color: '#419ED7',
+    fontSize: 50,
+    fontFamily: 'AveriaLibre-Regular',
+    textAlign: 'center',
+    textDecorationLine: 'underline',
+  },
+  description: {
+    color: '#419ED7',
     fontSize: 35,
     fontFamily: 'AveriaLibre-Regular',
     textAlign: 'center',
+    marginBottom: 60,
   },
   label: {
     color: '#FFFFFF',
@@ -19,7 +27,10 @@ const style = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
   container: {
-    backgroundColor: '#00ffff',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
   },
 });
 

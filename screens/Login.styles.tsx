@@ -14,6 +14,15 @@ const style = StyleSheet.create({
     fontFamily: 'AveriaLibre-Regular',
     textAlign: 'center',
     marginBottom: 60,
+    padding: 5,
+  },
+
+  inputContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+
+    marginBottom: 13,
   },
   label: {
     color: '#FFFFFF',
@@ -25,12 +34,47 @@ const style = StyleSheet.create({
     fontSize: 28,
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#FFFFFF',
+    flex: 1,
+    marginLeft: 10,
+    padding: 5,
   },
   container: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
+  },
+
+  buttonGreen: {
+    backgroundColor: '#37BD6D',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#37BD6D',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+  },
+
+  buttonBlue: {
+    backgroundColor: '#419ED7',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#419ED7',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+  },
+
+  buttonGray: {
+    backgroundColor: '#B0CCDE',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: '#B0CCDE',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+  },
+  buttonText: {
+    color: '#FFFFFF',
+    fontSize: 28,
+    fontFamily: 'AveriaLibre-Regular',
   },
 });
 

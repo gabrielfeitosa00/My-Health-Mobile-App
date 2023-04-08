@@ -8,6 +8,26 @@ const style = StyleSheet.create({
     textAlign: 'center',
     textDecorationLine: 'underline',
   },
+  backgroundImage: {
+    width: '100%',
+    height: '100%',
+  },
+
+  gradient: {
+    height: '100%',
+    width: '100%',
+    display: 'flex',
+    alignItems: 'center',
+  },
+  titleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 60,
+  },
+  titleIcon: {width: 40, height: 40},
+
   description: {
     color: '#419ED7',
     fontSize: 35,
@@ -17,64 +37,24 @@ const style = StyleSheet.create({
     padding: 5,
   },
 
-  inputContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-
-    marginBottom: 13,
-  },
-  label: {
-    color: '#FFFFFF',
-    fontSize: 28,
-    fontFamily: 'AveriaLibre-Regular',
-  },
-  input: {
-    color: '#3F92C5',
-    fontSize: 28,
-    fontFamily: 'AveriaLibre-Regular',
-    backgroundColor: '#FFFFFF',
-    flex: 1,
-    marginLeft: 10,
-    padding: 5,
-  },
   container: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
   },
-
-  buttonGreen: {
-    backgroundColor: '#37BD6D',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: '#37BD6D',
-    paddingHorizontal: 30,
-    paddingVertical: 15,
+  inputsGroup: {
+    width: '93%',
+    display: 'flex',
+    justifyContent: 'center',
   },
+  buttonGroup: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
 
-  buttonBlue: {
-    backgroundColor: '#419ED7',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: '#419ED7',
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-  },
-
-  buttonGray: {
-    backgroundColor: '#B0CCDE',
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: '#B0CCDE',
-    paddingHorizontal: 30,
-    paddingVertical: 15,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 28,
-    fontFamily: 'AveriaLibre-Regular',
+    height: 250,
+    marginTop: 30,
   },
 });
 

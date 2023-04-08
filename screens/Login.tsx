@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  Image,
-  ImageBackground,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Image, ImageBackground, Text, TextInput, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import BlueButton from '../components/BlueButton';
+import GrayButton from '../components/GrayButton';
+import GreenButton from '../components/GreenButton';
 import {style} from './Login.styles';
 
 export default function Login() {
@@ -69,17 +65,9 @@ export default function Login() {
               height: 250,
               marginTop: 30,
             }}>
-            <TouchableOpacity style={style.buttonGreen}>
-              <Text style={style.buttonText}>Entrar</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={style.buttonBlue}>
-              <Text style={style.buttonText}>Criar minha conta</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity style={style.buttonGray}>
-              <Text style={style.buttonText}>Esqueci minha senha</Text>
-            </TouchableOpacity>
+            <GreenButton text="Entrar" />
+            <BlueButton text="Criar minha conta" />
+            <GrayButton text="Esqueci minha senha" />
           </View>
         </LinearGradient>
       </ImageBackground>

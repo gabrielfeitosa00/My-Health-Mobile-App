@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {View} from 'react-native';
 import GreenButton from '../../components/GreenButton';
 import InputWithLabel from '../../components/InputWithLabel';
 import FormTextInput from '../../components/TextInput';
@@ -8,18 +8,21 @@ export default function RecoverPass(props) {
   return (
     <View style={style.container}>
       <View style={style.contentContainer}>
-        <InputWithLabel label="E-mail">
-          <FormTextInput isSecure={false} />
-        </InputWithLabel>
+        <View style={style.inputsGroup}>
+          <InputWithLabel label="E-mail">
+            <FormTextInput isSecure={false} />
+          </InputWithLabel>
+        </View>
 
-        <GreenButton
-          text="Recuperar Senha"
-          onPress={() => {
-            props.navigation.pop();
-          }}
-        />
+        <View style={style.buttonGroup}>
+          <GreenButton
+            text="Recuperar Senha"
+            onPress={() => {
+              props.navigation.pop();
+            }}
+          />
+        </View>
       </View>
-      <Text>RecoverPass</Text>
     </View>
   );
 }

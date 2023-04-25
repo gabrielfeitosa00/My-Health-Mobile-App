@@ -13,7 +13,7 @@ const style = StyleSheet.create({
 
   buttonText: {
     color: '#FFFFFF',
-    fontSize: 28,
+    fontSize: 22,
     fontFamily: 'AveriaLibre-Regular',
   },
 });

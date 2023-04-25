@@ -10,21 +10,19 @@ const style = StyleSheet.create({
   },
   backgroundImage: {
     width: '100%',
-    height: '100%',
   },
 
   gradient: {
-    height: '100%',
     width: '100%',
-    display: 'flex',
-    alignItems: 'center',
+
+    height: '100%',
   },
   titleContainer: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 60,
+    marginBottom: 50,
   },
   titleIcon: {width: 40, height: 40},
 
@@ -38,10 +36,12 @@ const style = StyleSheet.create({
   },
 
   container: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
     height: '100%',
+  },
+
+  contentContainer: {
+    width: '100%',
+    paddingHorizontal: 10,
   },
   inputsGroup: {
     width: '93%',

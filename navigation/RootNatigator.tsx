@@ -8,9 +8,29 @@ const Stack = createNativeStackNavigator();
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="RecoverPass" component={RecoverPass} />
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="RecoverPass"
+          component={RecoverPass}
+          options={{
+            title: 'Recover Password',
+            navigationBarHidden: true,
+            headerStyle: {
+              backgroundColor: '#C1E7E3',
+            },
+            headerTitleStyle: {
+              color: '#419ED7',
+              fontWeight: '400',
+              fontSize: 30,
+              fontFamily: 'AveriaLibre-Regular',
+            },
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

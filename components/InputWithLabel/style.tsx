@@ -10,7 +10,7 @@ const style = StyleSheet.create({
   },
   label: {
     color: '#FFFFFF',
-    fontSize: 28,
+    fontSize: 20,
     fontFamily: 'AveriaLibre-Regular',
   },
 });

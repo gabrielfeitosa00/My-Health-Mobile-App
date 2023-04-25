@@ -5,10 +5,32 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
+    width: '100%',
+    backgroundColor: '#ADD4D0',
   },
   contentContainer: {
-    backgroundColor: '#ADD4D0',
-    height: '100%',
+    padding: 6,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    width: '100%',
+  },
+
+  buttonGroup: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    marginTop: 250,
+  },
+
+  inputsGroup: {
+    marginTop: 50,
+
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
   },
 });

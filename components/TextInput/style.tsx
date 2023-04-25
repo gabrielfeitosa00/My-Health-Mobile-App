@@ -3,7 +3,7 @@ import {StyleSheet} from 'react-native';
 const style = StyleSheet.create({
   input: {
     color: '#3F92C5',
-    fontSize: 28,
+    fontSize: 20,
     fontFamily: 'AveriaLibre-Regular',
     backgroundColor: '#FFFFFF',
     flex: 1,

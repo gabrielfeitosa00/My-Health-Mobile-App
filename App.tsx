@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -5,9 +6,7 @@
  * @format
  */
 
-import React from 'react';
-
-import Navigation from './navigation/RootNatigator';
+import Navigation from './navigation/RootNavigator';
 function App(): JSX.Element {
   return <Navigation />;
 }

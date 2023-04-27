@@ -45,7 +45,12 @@ export default function Login(props) {
             </View>
 
             <View style={style.buttonGroup}>
-              <GreenButton text="Entrar" />
+              <GreenButton
+                text="Entrar"
+                onPress={() => {
+                  props.navigation.push('Drawer');
+                }}
+              />
               <BlueButton text="Criar minha conta" />
               <GrayButton
                 text="Esqueci minha senha"

@@ -5,10 +5,14 @@ import 'react-native-gesture-handler';
  *
  * @format
  */
-
+import {Provider as PaperProvider} from 'react-native-paper';
 import Navigation from './navigation/RootNavigator';
 function App(): JSX.Element {
-  return <Navigation />;
+  return (
+    <PaperProvider>
+      <Navigation />
+    </PaperProvider>
+  );
 }
 
 export default App;

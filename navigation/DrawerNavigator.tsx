@@ -8,9 +8,21 @@ const DrawerNavigation = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
-        drawerActiveBackgroundColor: 'darkblue',
-        drawerLabelStyle: {color: 'white'},
-        drawerStyle: {backgroundColor: 'lightblue', width: '60%'},
+        drawerLabelStyle: {
+          color: '#419ED7',
+          fontSize: 22,
+          fontFamily: 'AveriaLibre-Regular',
+        },
+        drawerStyle: {backgroundColor: '#ADD4D0', width: '75%'},
+        headerStyle: {
+          backgroundColor: '#C1E7E3',
+        },
+        headerTitleStyle: {
+          color: '#419ED7',
+          fontWeight: '400',
+          fontSize: 30,
+          fontFamily: 'AveriaLibre-Regular',
+        },
       }}
       drawerContent={props => <CustomDrawer {...props} />}>
       <Drawer.Screen name="Minhas Vacinas" component={VaccineList} />

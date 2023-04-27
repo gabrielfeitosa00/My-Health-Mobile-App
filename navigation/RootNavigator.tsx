@@ -15,7 +15,11 @@ const Navigation = () => {
           component={Login}
           options={{headerShown: false}}
         />
-        <Stack.Screen name="Drawer" component={DrawerNavigation} />
+        <Stack.Screen
+          name="Drawer"
+          component={DrawerNavigation}
+          options={{headerShown: false}}
+        />
         <Stack.Screen
           name="RecoverPass"
           component={RecoverPass}

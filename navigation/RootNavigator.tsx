@@ -15,6 +15,7 @@ const Navigation = () => {
           component={Login}
           options={{headerShown: false}}
         />
+        <Stack.Screen name="Drawer" component={DrawerNavigation} />
         <Stack.Screen
           name="RecoverPass"
           component={RecoverPass}
@@ -33,11 +34,6 @@ const Navigation = () => {
           }}
         />
       </Stack.Navigator>
-      <Stack.Screen
-        name="DrawerNavigation"
-        component={DrawerNavigation}
-        options={{headerShown: false}}
-      />
     </NavigationContainer>
   );
 };

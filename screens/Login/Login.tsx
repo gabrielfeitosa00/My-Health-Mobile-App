@@ -48,7 +48,7 @@ export default function Login(props) {
               <GreenButton
                 text="Entrar"
                 onPress={() => {
-                  props.navigation.push('DrawerNavigation');
+                  props.navigation.push('Drawer');
                 }}
               />
               <BlueButton text="Criar minha conta" />

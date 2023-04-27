@@ -4,10 +4,7 @@
  *
  * @format
  */
-
-import React from 'react';
-
-import Navigation from './navigation/RootNatigator';
+import Navigation from './navigation/RootNavigator';
 function App(): JSX.Element {
   return <Navigation />;
 }

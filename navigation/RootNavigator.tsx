@@ -2,6 +2,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../screens/Login/Login';
 import RecoverPass from '../screens/RecoverPass/RecoverPass';
+import DrawerNavigation from './DrawerNavigator';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,11 @@ const Navigation = () => {
           }}
         />
       </Stack.Navigator>
+      <Stack.Screen
+        name="DrawerNavigation"
+        component={DrawerNavigation}
+        options={{headerShown: false}}
+      />
     </NavigationContainer>
   );
 };

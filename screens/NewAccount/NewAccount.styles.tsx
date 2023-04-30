@@ -22,15 +22,16 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-    marginTop: 250,
+    marginTop: 220,
   },
 
   inputsGroup: {
-    marginTop: 50,
+    marginTop: 45,
 
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+    rowGap: 10,
     width: '100%',
   },
 });

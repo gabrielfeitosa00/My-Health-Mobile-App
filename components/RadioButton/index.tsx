@@ -20,7 +20,6 @@ export default function RadioButtons({
       {items.map(item => {
         return (
           <View style={style.radioOption}>
-            <Text style={style.radioOptionLabel}> {item.value} </Text>
             <RadioButton
               value={item.value}
               status={checked === item.value ? 'checked' : 'unchecked'}
@@ -28,6 +27,7 @@ export default function RadioButtons({
               color="#419ED7"
               uncheckedColor="#FFFFFF"
             />
+            <Text style={style.radioOptionLabel}> {item.value} </Text>
           </View>
         );
       })}

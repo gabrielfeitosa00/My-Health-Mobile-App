@@ -1,6 +1,7 @@
 import {Image, ImageBackground, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
+import {useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BlueButton from '../../components/BlueButton';
 import GrayButton from '../../components/GrayButton';
@@ -9,6 +10,8 @@ import InputWithLabel from '../../components/InputWithLabel';
 import FormTextInput from '../../components/TextInput';
 import {style} from './Login.styles';
 export default function Login(props) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const insets = useSafeAreaInsets();
   return (
     <View
@@ -37,10 +40,18 @@ export default function Login(props) {
 
             <View style={style.inputsGroup}>
               <InputWithLabel label="E-mail">
-                <FormTextInput isSecure={false} />
+                <FormTextInput
+                  value={email}
+                  setValue={setEmail}
+                  isSecure={false}
+                />
               </InputWithLabel>
               <InputWithLabel label="Senha">
-                <FormTextInput isSecure={true} />
+                <FormTextInput
+                  value={password}
+                  setValue={setPassword}
+                  isSecure={true}
+                />
               </InputWithLabel>
             </View>
 

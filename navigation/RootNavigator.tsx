@@ -1,6 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from '../screens/Login/Login';
+import NewAccount from '../screens/NewAccount/NewAccount';
 import RecoverPass from '../screens/RecoverPass/RecoverPass';
 import DrawerNavigation from './DrawerNavigator';
 
@@ -24,7 +25,25 @@ const Navigation = () => {
           name="RecoverPass"
           component={RecoverPass}
           options={{
-            title: 'Recover Password',
+            title: 'Recuperar Senha',
+            navigationBarHidden: true,
+            headerStyle: {
+              backgroundColor: '#C1E7E3',
+            },
+            headerTitleStyle: {
+              color: '#419ED7',
+              fontWeight: '400',
+              fontSize: 30,
+              fontFamily: 'AveriaLibre-Regular',
+            },
+          }}
+        />
+
+        <Stack.Screen
+          name="NewAccount"
+          component={NewAccount}
+          options={{
+            title: 'Nova Conta',
             navigationBarHidden: true,
             headerStyle: {
               backgroundColor: '#C1E7E3',

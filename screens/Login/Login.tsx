@@ -51,7 +51,12 @@ export default function Login(props) {
                   props.navigation.push('Drawer');
                 }}
               />
-              <BlueButton text="Criar minha conta" />
+              <BlueButton
+                text="Criar minha conta"
+                onPress={() => {
+                  props.navigation.push('NewAccount');
+                }}
+              />
               <GrayButton
                 text="Esqueci minha senha"
                 onPress={() => {

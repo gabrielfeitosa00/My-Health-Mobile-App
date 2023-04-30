@@ -1,4 +1,3 @@
-import React from 'react';
 import {TextInput} from 'react-native';
 import {style} from './style';
 interface IFormTextInput {
@@ -6,12 +5,14 @@ interface IFormTextInput {
   value: any;
   setValue: (value: any) => void;
   isEditable?: boolean;
+  placeHolder?: string;
 }
 export default function FormTextInput({
   isSecure,
   isEditable = true,
   value,
   setValue,
+  placeHolder,
 }: IFormTextInput) {
   return (
     <TextInput
@@ -20,6 +21,7 @@ export default function FormTextInput({
       editable={isEditable}
       value={value}
       onChangeText={setValue}
+      placeholder={placeHolder}
     />
   );
 }

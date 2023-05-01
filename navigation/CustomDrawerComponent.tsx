@@ -5,7 +5,7 @@ import {
 } from '@react-navigation/drawer';
 import {Text, View} from 'react-native';
 import {Divider} from 'react-native-paper';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 const CustomDrawer = props => {
   return (
     <DrawerContentScrollView {...props} style={{backgroundColor: '#ADD4D0'}}>
@@ -39,6 +39,7 @@ const CustomDrawer = props => {
           fontSize: 22,
           fontFamily: 'AveriaLibre-Regular',
         }}
+        icon={() => <Icon name="sign-out" size={30} />}
         label="Sair"
         onPress={() => {
           props.navigation.popToTop();

@@ -93,8 +93,7 @@ export default function VaccineList(props) {
             <GreenButton
               text="Nova vacina"
               onPress={() => {
-                //TODO REDIRECT to Create Vaccine
-                props.navigation.pop();
+                props.navigation.navigate('NewVaccine');
               }}
             />
           </View>

@@ -22,7 +22,8 @@ const style = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
-    marginTop: 100,
+    marginTop: 90,
+    gap: 15,
   },
 
   inputsGroup: {

@@ -4,10 +4,12 @@ import {View} from 'react-native';
 import DocumentPicker, {types} from 'react-native-document-picker';
 import {DatePickerModal} from 'react-native-paper-dates';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import DeleteModal from '../../components/DeleteModal';
 import GreenButton from '../../components/GreenButton';
 import ImagePicker from '../../components/ImagePicker';
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
+import RedButton from '../../components/RedButton';
 import FormTextInput from '../../components/TextInput';
 import {style} from './EditVaccine.style';
 export default function EditVaccine(props) {
@@ -27,7 +29,13 @@ export default function EditVaccine(props) {
   const [open, setOpen] = useState(false);
   const [nextOpen, setNextOpen] = useState(false);
   const [fileResponse, setFileResponse] = useState(undefined);
+  const [visible, setVisible] = useState(false);
 
+  const showModal = () => setVisible(true);
+  const hideModal = () => setVisible(false);
+  const confirmDelete = () => {
+    props.navigation.pop();
+  };
   const onDismissSingle = useCallback(() => {
     setOpen(false);
   }, [setOpen]);
@@ -68,6 +76,11 @@ export default function EditVaccine(props) {
   }, []);
   return (
     <View style={style.container}>
+      <DeleteModal
+        visible={visible}
+        onDismiss={hideModal}
+        onConfirm={confirmDelete}
+      />
       <View style={style.contentContainer}>
         <View style={style.inputsGroup}>
           <InputWithLabel label="Data de Vacinação">
@@ -144,6 +157,11 @@ export default function EditVaccine(props) {
             onPress={() => {
               props.navigation.pop();
             }}
+          />
+          <RedButton
+            icon={<Icon name="trash-o" size={30} color="#FFFFFF" />}
+            text="Excluir"
+            onPress={showModal}
           />
         </View>
       </View>

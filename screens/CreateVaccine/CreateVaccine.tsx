@@ -10,7 +10,7 @@ import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
 import FormTextInput from '../../components/TextInput';
 import {style} from './CreateVaccine.style';
-export default function NewAccount(props) {
+export default function CreateVaccine(props) {
   const radioButtomItems = [
     {value: '1.a Dose'},
     {value: '2.a Dose'},

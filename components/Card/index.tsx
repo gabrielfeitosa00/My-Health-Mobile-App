@@ -1,6 +1,8 @@
+import {useNavigation} from '@react-navigation/native';
 import dayjs from 'dayjs';
-import {Image, Text, View} from 'react-native';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import {style} from './style';
+
 export interface ICardProps {
   id: string;
   name: string;
@@ -13,11 +15,16 @@ export default function Card({
   name,
   dose,
   dateTaken,
-
+  id,
   nextDose,
 }: ICardProps) {
+  const navigation = useNavigation();
   return (
-    <View style={style.container}>
+    <TouchableOpacity
+      style={style.container}
+      onPress={() => {
+        navigation.navigate('EditVaccine', {id});
+      }}>
       <Text style={style.vaccineTitle}> {name} </Text>
       <View style={style.doseContainer}>
         <Text style={style.doseText}>{dose}</Text>
@@ -34,6 +41,6 @@ export default function Card({
             : 'Não há próxima dose'}
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

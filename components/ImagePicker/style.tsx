@@ -6,17 +6,15 @@ const style = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     gap: 8,
-    marginBottom: 13,
-    height: 150,
-    flex: 1,
+    minHeight: 50,
 
+    maxHeight: 400,
     flexGrow: 1,
   },
   pickerButton: {
-    maxHeight: 40,
+    height: 40,
     backgroundColor: '#3F92C5',
     width: '85%',
-    flex: 1,
 
     padding: 5,
     display: 'flex',

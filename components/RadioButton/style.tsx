@@ -9,6 +9,7 @@ const style = StyleSheet.create({
 
     flex: 1,
     marginLeft: 10,
+    flexWrap: 'wrap',
   },
   radioOption: {
     display: 'flex',

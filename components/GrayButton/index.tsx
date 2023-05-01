@@ -6,7 +6,7 @@ interface IGrayButtonProps {
 }
 export default function GrayButton({text, onPress}: IGrayButtonProps) {
   return (
-    <TouchableOpacity style={style.buttonGray} on>
+    <TouchableOpacity style={style.buttonGray}>
       <Text style={style.buttonText} onPress={onPress}>
         {text}
       </Text>

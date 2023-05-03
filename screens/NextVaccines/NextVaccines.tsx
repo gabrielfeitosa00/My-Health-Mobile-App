@@ -35,6 +35,26 @@ export default function NextVaccines(props) {
       name: 'Poliomelite',
       nextDose: new Date(),
     },
+    {
+      id: '6',
+      name: 'Poliomelite',
+      nextDose: new Date(),
+    },
+    {
+      id: '7',
+      name: 'Poliomelite',
+      nextDose: new Date(),
+    },
+    {
+      id: '8',
+      name: 'Poliomelite',
+      nextDose: new Date(),
+    },
+    {
+      id: '9',
+      name: 'Poliomelite',
+      nextDose: new Date(),
+    },
   ];
   return (
     <View style={style.container}>

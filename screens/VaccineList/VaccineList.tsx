@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -10,6 +10,7 @@ import {VaccineData} from '../../data/mockVaccine';
 import {style} from './VaccineList.style';
 export default function VaccineList(props) {
   const [search, setSearch] = useState('');
+  const [currentData, setCurrentData] = useState(VaccineData);
   const insets = useSafeAreaInsets();
   const data = [
     {
@@ -66,6 +67,19 @@ export default function VaccineList(props) {
       nextDose: new Date(),
     },
   ];
+
+  useEffect(() => {
+    if (search) {
+      let filteredVaccine = VaccineData.filter(item =>
+        item.name.includes(search),
+      );
+      console.log(filteredVaccine);
+      setCurrentData(filteredVaccine);
+    } else {
+      setCurrentData(VaccineData);
+    }
+  }, [search]);
+
   return (
     <View
       style={{
@@ -89,7 +103,7 @@ export default function VaccineList(props) {
               color="#8B8B8B"
             />
           </InputWithLabel>
-          <CardContainer data={VaccineData} />
+          <CardContainer data={currentData} />
           <View style={style.buttonGroup}>
             <GreenButton
               text="Nova vacina"

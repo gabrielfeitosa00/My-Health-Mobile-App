@@ -6,6 +6,7 @@ import {DatePickerModal} from 'react-native-paper-dates';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DeleteModal from '../../components/DeleteModal';
 import GreenButton from '../../components/GreenButton';
+
 import ImagePicker from '../../components/ImagePicker';
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
@@ -40,6 +41,23 @@ export default function EditVaccine(props) {
     setDateVaccine(undefined);
     setNextDateVaccine(undefined);
   };
+  const handleSubmitVaccine = async () => {
+    if (!!vacina && !!dateVaccineString) {
+      let vaccineEdited = VaccineData.filter(
+        item => item.id === props.route.params.id,
+      )[0];
+      let vaccineWithoutEdited = VaccineData.filter(
+        item => item.id !== props.route.params.id,
+      );
+      vaccineEdited.name = vacina;
+      vaccineEdited.dose = checked;
+      vaccineEdited.dateTaken = dateVaccine;
+      vaccineEdited.nextDose = nextDateVaccine;
+      vaccineWithoutEdited.push(vaccineEdited);
+      setVaccineData(vaccineWithoutEdited);
+    }
+    props.navigation.pop();
+  };
   useEffect(() => {
     const vaccine = VaccineData.filter(
       item => item.id === props.route.params.id,
@@ -57,8 +75,10 @@ export default function EditVaccine(props) {
     return clearInputs;
   }, []);
   const confirmDelete = () => {
-    let test = VaccineData.filter(item => item.id === !props.route.params.id);
-    setVaccineData(test);
+    let removedVaccine = VaccineData.filter(
+      item => item.id === !props.route.params.id,
+    );
+    setVaccineData(removedVaccine);
     props.navigation.pop();
   };
   const onDismissSingle = useCallback(() => {
@@ -177,12 +197,7 @@ export default function EditVaccine(props) {
         </View>
 
         <View style={style.buttonGroup}>
-          <GreenButton
-            text="Cadastrar"
-            onPress={() => {
-              props.navigation.pop();
-            }}
-          />
+          <GreenButton text="Salvar Alterações" onPress={handleSubmitVaccine} />
           <RedButton
             icon={<Icon name="trash-o" size={30} color="#FFFFFF" />}
             text="Excluir"

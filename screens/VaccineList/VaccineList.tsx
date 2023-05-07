@@ -78,7 +78,7 @@ export default function VaccineList(props) {
     } else {
       setCurrentData(VaccineData);
     }
-  }, [search]);
+  }, [search, VaccineData]);
 
   return (
     <View

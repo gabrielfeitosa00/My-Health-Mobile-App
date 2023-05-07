@@ -1,8 +1,8 @@
 import {View} from 'react-native';
 import GreenButton from '../../components/GreenButton';
 import NextVaccineCardContainer from '../../components/NextVaccineContainer';
+import {VaccineData} from '../../data/mockVaccine';
 import {style} from './NextVaccines.styles';
-
 export default function NextVaccines(props) {
   const data = [
     {
@@ -56,10 +56,11 @@ export default function NextVaccines(props) {
       nextDose: new Date(),
     },
   ];
+  const nextVaccines = VaccineData.filter(item => !!item.nextDose);
   return (
     <View style={style.container}>
       <View style={style.contentContainer}>
-        <NextVaccineCardContainer data={data} />
+        <NextVaccineCardContainer data={nextVaccines} />
         <View style={style.buttonGroup}>
           <GreenButton
             text="Nova vacina"

@@ -1,3 +1,6 @@
-const VaccineData = [];
+let VaccineData: any[] = [];
 
-export {VaccineData};
+const setVaccineData = data => {
+  VaccineData = data;
+};
+export {VaccineData, setVaccineData};

@@ -11,7 +11,7 @@ import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
 import RedButton from '../../components/RedButton';
 import FormTextInput from '../../components/TextInput';
-import {VaccineData} from '../../data/mockVaccine';
+import {VaccineData, setVaccineData} from '../../data/mockVaccine';
 import {style} from './EditVaccine.style';
 export default function EditVaccine(props) {
   const radioButtomItems = [
@@ -57,6 +57,8 @@ export default function EditVaccine(props) {
     return clearInputs;
   }, []);
   const confirmDelete = () => {
+    let test = VaccineData.filter(item => item.id === !props.route.params.id);
+    setVaccineData(test);
     props.navigation.pop();
   };
   const onDismissSingle = useCallback(() => {

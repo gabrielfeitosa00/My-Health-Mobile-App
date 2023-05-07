@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {View} from 'react-native';
 import DocumentPicker, {types} from 'react-native-document-picker';
 import {DatePickerModal} from 'react-native-paper-dates';
@@ -11,6 +11,7 @@ import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
 import RedButton from '../../components/RedButton';
 import FormTextInput from '../../components/TextInput';
+import {VaccineData} from '../../data/mockVaccine';
 import {style} from './EditVaccine.style';
 export default function EditVaccine(props) {
   const radioButtomItems = [
@@ -33,6 +34,28 @@ export default function EditVaccine(props) {
 
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+  const clearInputs = () => {
+    setVacina('');
+    setChecked('1.a Dose');
+    setDateVaccine(undefined);
+    setNextDateVaccine(undefined);
+  };
+  useEffect(() => {
+    const vaccine = VaccineData.filter(
+      item => item.id === props.route.params.id,
+    )[0];
+
+    setVacina(vaccine.name);
+    setChecked(vaccine.dose);
+    setDateVaccine(vaccine.dateTaken);
+    setDateVaccineString(dayjs(vaccine.dateTaken).format('DD/MM/YY'));
+    const nextDose = vaccine.nextDose || undefined;
+    setNextDateVaccine(nextDose);
+    setNextDateVaccineString(
+      nextDose ? dayjs(nextDose).format('DD/MM/YY') : '',
+    );
+    return clearInputs;
+  }, []);
   const confirmDelete = () => {
     props.navigation.pop();
   };

@@ -5,7 +5,6 @@ interface IImagePicker {
   uri?: string;
 }
 export default function ImagePicker({onPress, uri}: IImagePicker) {
-  console.log(uri);
   return (
     <View style={style.pickerContainer}>
       <TouchableOpacity onPress={onPress} style={style.pickerButton}>

@@ -2,13 +2,16 @@ import dayjs from 'dayjs';
 import {useCallback, useState} from 'react';
 import {View} from 'react-native';
 import DocumentPicker, {types} from 'react-native-document-picker';
+import 'react-native-get-random-values';
 import {DatePickerModal} from 'react-native-paper-dates';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {v4 as uuidv4} from 'uuid';
 import GreenButton from '../../components/GreenButton';
 import ImagePicker from '../../components/ImagePicker';
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
 import FormTextInput from '../../components/TextInput';
+import {VaccineData} from '../../data/mockVaccine';
 import {style} from './CreateVaccine.style';
 export default function CreateVaccine(props) {
   const radioButtomItems = [
@@ -66,6 +69,19 @@ export default function CreateVaccine(props) {
       console.warn(err);
     }
   }, []);
+
+  const handleSubmitVaccine = async () => {
+    if (!!vacina && !!dateVaccineString) {
+      VaccineData.push({
+        id: uuidv4(),
+        name: vacina,
+        dose: checked,
+        dateTaken: dateVaccine,
+        nextDose: nextDateVaccine,
+      });
+    }
+    props.navigation.pop();
+  };
   return (
     <View style={style.container}>
       <View style={style.contentContainer}>
@@ -139,12 +155,7 @@ export default function CreateVaccine(props) {
         </View>
 
         <View style={style.buttonGroup}>
-          <GreenButton
-            text="Cadastrar"
-            onPress={() => {
-              props.navigation.pop();
-            }}
-          />
+          <GreenButton text="Cadastrar" onPress={handleSubmitVaccine} />
         </View>
       </View>
     </View>

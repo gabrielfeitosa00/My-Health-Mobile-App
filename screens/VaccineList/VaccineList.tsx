@@ -6,6 +6,7 @@ import CardContainer from '../../components/CardContainer';
 import GreenButton from '../../components/GreenButton';
 import InputWithLabel from '../../components/InputWithLabel';
 import FormTextInput from '../../components/TextInput';
+import {VaccineData} from '../../data/mockVaccine';
 import {style} from './VaccineList.style';
 export default function VaccineList(props) {
   const [search, setSearch] = useState('');
@@ -88,7 +89,7 @@ export default function VaccineList(props) {
               color="#8B8B8B"
             />
           </InputWithLabel>
-          <CardContainer data={data} />
+          <CardContainer data={VaccineData} />
           <View style={style.buttonGroup}>
             <GreenButton
               text="Nova vacina"

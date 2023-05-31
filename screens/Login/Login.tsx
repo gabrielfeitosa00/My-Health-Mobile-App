@@ -20,10 +20,10 @@ export default function Login(props) {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
 
-      console.log('Usuário criado com sucesso: ' + JSON.stringify(user));
+      console.log('Usuário logado com sucesso: ' + JSON.stringify(user));
       props.navigation.push('Drawer');
     } catch (error) {
-      console.log('Erro ao cadastrar usuário: ' + JSON.stringify(error));
+      console.log('Erro ao logar usuário: ' + JSON.stringify(error));
     }
   };
   return (

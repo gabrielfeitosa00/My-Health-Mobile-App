@@ -1,6 +1,7 @@
 import {Image, ImageBackground, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
+import {signInWithEmailAndPassword} from 'firebase/auth';
 import {useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BlueButton from '../../components/BlueButton';
@@ -8,11 +9,23 @@ import GrayButton from '../../components/GrayButton';
 import GreenButton from '../../components/GreenButton';
 import InputWithLabel from '../../components/InputWithLabel';
 import FormTextInput from '../../components/TextInput';
+import {auth} from '../../firebase/firebaseApp';
 import {style} from './Login.styles';
+
 export default function Login(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const insets = useSafeAreaInsets();
+  const handleLogin = async () => {
+    try {
+      const user = await signInWithEmailAndPassword(auth, email, password);
+
+      console.log('Usuário criado com sucesso: ' + JSON.stringify(user));
+      props.navigation.push('Drawer');
+    } catch (error) {
+      console.log('Erro ao cadastrar usuário: ' + JSON.stringify(error));
+    }
+  };
   return (
     <View
       style={{
@@ -56,12 +69,7 @@ export default function Login(props) {
             </View>
 
             <View style={style.buttonGroup}>
-              <GreenButton
-                text="Entrar"
-                onPress={() => {
-                  props.navigation.push('Drawer');
-                }}
-              />
+              <GreenButton text="Entrar" onPress={handleLogin} />
               <BlueButton
                 text="Criar minha conta"
                 onPress={() => {

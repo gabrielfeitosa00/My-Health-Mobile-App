@@ -1,13 +1,17 @@
 import dayjs from 'dayjs';
-import {useCallback, useState} from 'react';
-import {View} from 'react-native';
-import {DatePickerModal} from 'react-native-paper-dates';
+
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { style } from './NewAccount.styles';
+
+import { useCallback, useState } from 'react';
+import { View } from 'react-native';
+import { DatePickerModal } from 'react-native-paper-dates';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import GreenButton from '../../components/GreenButton';
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
 import FormTextInput from '../../components/TextInput';
-import {style} from './NewAccount.styles';
+import { auth } from '../../firebase/firebaseApp';
 
 export default function NewAccount(props) {
   const radioButtomItems = [{value: 'Masculino'}, {value: 'Feminino'}];
@@ -33,6 +37,17 @@ export default function NewAccount(props) {
     },
     [setOpen, setDate],
   );
+
+  const handleConfirmAccount = async () => {
+    try {
+      const user = await createUserWithEmailAndPassword(auth, email, password);
+
+      console.log('Usuário criado com sucesso: ' + JSON.stringify(user));
+      props.navigation.pop();
+    } catch (error) {
+      console.log('Erro ao cadastrar usuário: ' + JSON.stringify(error));
+    }
+  };
 
   return (
     <View style={style.container}>
@@ -93,12 +108,7 @@ export default function NewAccount(props) {
         </View>
 
         <View style={style.buttonGroup}>
-          <GreenButton
-            text="Cadastrar"
-            onPress={() => {
-              props.navigation.pop();
-            }}
-          />
+          <GreenButton text="Cadastrar" onPress={handleConfirmAccount} />
         </View>
       </View>
     </View>

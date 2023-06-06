@@ -1,17 +1,18 @@
 import dayjs from 'dayjs';
 
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { style } from './NewAccount.styles';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {doc, setDoc} from 'firebase/firestore';
+import {style} from './NewAccount.styles';
 
-import { useCallback, useState } from 'react';
-import { View } from 'react-native';
-import { DatePickerModal } from 'react-native-paper-dates';
+import {useCallback, useState} from 'react';
+import {Alert, View} from 'react-native';
+import {DatePickerModal} from 'react-native-paper-dates';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import GreenButton from '../../components/GreenButton';
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
 import FormTextInput from '../../components/TextInput';
-import { auth } from '../../firebase/firebaseApp';
+import {auth, db} from '../../firebase/firebaseApp';
 
 export default function NewAccount(props) {
   const radioButtomItems = [{value: 'Masculino'}, {value: 'Feminino'}];
@@ -41,11 +42,19 @@ export default function NewAccount(props) {
   const handleConfirmAccount = async () => {
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
+      await setDoc(doc(db, 'user', user.user.uid), {
+        id: user.user.uid,
+        name,
+        sex: checked,
+        birthday: date,
+        email,
+      });
 
-      console.log('Usuário criado com sucesso: ' + JSON.stringify(user));
       props.navigation.pop();
     } catch (error) {
-      console.log('Erro ao cadastrar usuário: ' + JSON.stringify(error));
+      Alert.alert('Erro ao cadastrar usuário', JSON.stringify(error), [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
     }
   };
 

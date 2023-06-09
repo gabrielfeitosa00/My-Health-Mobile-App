@@ -1,29 +1,34 @@
-import {Image, ImageBackground, Text, View} from 'react-native';
+import {Alert, Image, ImageBackground, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {signInWithEmailAndPassword} from 'firebase/auth';
 import {useState} from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useDispatch} from 'react-redux';
 import BlueButton from '../../components/BlueButton';
 import GrayButton from '../../components/GrayButton';
 import GreenButton from '../../components/GreenButton';
 import InputWithLabel from '../../components/InputWithLabel';
 import FormTextInput from '../../components/TextInput';
 import {auth} from '../../firebase/firebaseApp';
+import {reducerSetUser} from '../../redux/userSlice';
 import {style} from './Login.styles';
-
 export default function Login(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
   const handleLogin = async () => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
 
-      console.log('Usuário logado com sucesso: ' + JSON.stringify(user));
+      dispatch(reducerSetUser({userId: user.user.uid}));
+
       props.navigation.push('Drawer');
     } catch (error) {
-      console.log('Erro ao logar usuário: ' + JSON.stringify(error));
+      Alert.alert('Erro ao cadastrar usuário', JSON.stringify(error), [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
     }
   };
   return (

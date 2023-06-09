@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useSelector} from 'react-redux';
 import CardContainer from '../../components/CardContainer';
 import GreenButton from '../../components/GreenButton';
 import InputWithLabel from '../../components/InputWithLabel';
@@ -67,7 +68,8 @@ export default function VaccineList(props) {
       nextDose: new Date(),
     },
   ];
-
+  const user = useSelector(state => state.user);
+  console.log('here', user);
   useEffect(() => {
     if (search) {
       let filteredVaccine = VaccineData.filter(item =>

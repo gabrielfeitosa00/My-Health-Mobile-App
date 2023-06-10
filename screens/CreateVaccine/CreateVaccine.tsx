@@ -7,7 +7,7 @@ import DocumentPicker, {types} from 'react-native-document-picker';
 import 'react-native-get-random-values';
 import {DatePickerModal} from 'react-native-paper-dates';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
 import GreenButton from '../../components/GreenButton';
 import ImagePicker from '../../components/ImagePicker';
@@ -15,6 +15,7 @@ import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
 import FormTextInput from '../../components/TextInput';
 import {db, storage} from '../../firebase/firebaseApp';
+import {reducerSetvaccine} from '../../redux/vacineSlice';
 import {style} from './CreateVaccine.style';
 export default function CreateVaccine(props) {
   const radioButtomItems = [
@@ -33,6 +34,7 @@ export default function CreateVaccine(props) {
   const [open, setOpen] = useState(false);
   const [nextOpen, setNextOpen] = useState(false);
   const [fileResponse, setFileResponse] = useState(undefined);
+  const dispatch = useDispatch();
   const user = useSelector(state => state.user);
   const onDismissSingle = useCallback(() => {
     setOpen(false);
@@ -79,24 +81,45 @@ export default function CreateVaccine(props) {
         {text: 'OK', onPress: () => console.log('OK Pressed')},
       ]);
     }
-    if (!!vacina && !!dateVaccineString) {
-      const file = await fetch(fileResponse);
-      const blob = await file.blob();
-      const filePath = `images/${uuidv4()}`;
-      await uploadBytes(ref(storage, filePath), blob);
-      const url = await getDownloadURL(ref(storage, filePath));
+    try {
+      if (!!vacina && !!dateVaccineString) {
+        const file = await fetch(fileResponse);
+        const blob = await file.blob();
+        const filePath = `images/${uuidv4()}`;
+        await uploadBytes(ref(storage, filePath), blob);
+        const url = await getDownloadURL(ref(storage, filePath));
+        const newVaccine = {
+          id: uuidv4(),
+          name: vacina,
+          dose: checked,
+          dateTaken: dateVaccine,
+          nextDose: nextDateVaccine || null,
+          url,
+          filePath,
+        };
+        await addDoc(
+          collection(db, 'user', user.userId, 'vaccine'),
+          newVaccine,
+        );
+        const {dateTaken, nextDose, ...rest} = newVaccine;
+        const serializedDate = dateTaken!.toString();
+        const serializedNextDate = nextDose ? nextDose!.toString() : null;
+        dispatch(
+          reducerSetvaccine({
+            ...rest,
+            dateTaken: serializedDate,
+            nextDose: serializedNextDate,
+          }),
+        );
 
-      await addDoc(collection(db, 'user', user.userId, 'vaccine'), {
-        id: uuidv4(),
-        name: vacina,
-        dose: checked,
-        dateTaken: dateVaccine,
-        nextDose: nextDateVaccine || null,
-        url,
-        filePath,
-      });
+        props.navigation.pop();
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Erro ao cadastrar vacina', JSON.stringify(error), [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
     }
-    props.navigation.pop();
   };
   return (
     <View style={style.container}>
@@ -116,7 +139,6 @@ export default function CreateVaccine(props) {
               onPress={() => setOpen(true)}
             />
             <DatePickerModal
-              locale="pt"
               mode="single"
               visible={open}
               onDismiss={onDismissSingle}
@@ -159,7 +181,6 @@ export default function CreateVaccine(props) {
               onPress={() => setNextOpen(true)}
             />
             <DatePickerModal
-              locale="pt"
               mode="single"
               visible={nextOpen}
               onDismiss={onDismissNextSingle}

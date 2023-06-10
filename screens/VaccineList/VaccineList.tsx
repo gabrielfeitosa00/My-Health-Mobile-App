@@ -69,7 +69,9 @@ export default function VaccineList(props) {
     },
   ];
   const user = useSelector(state => state.user);
+  const vaccines = useSelector(state => state.vaccine);
   console.log('here', user);
+  console.log('vaccine', vaccines);
   useEffect(() => {
     if (search) {
       let filteredVaccine = VaccineData.filter(item =>

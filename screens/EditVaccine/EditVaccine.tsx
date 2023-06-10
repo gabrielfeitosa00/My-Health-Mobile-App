@@ -142,7 +142,6 @@ export default function EditVaccine(props) {
               onPress={() => setOpen(true)}
             />
             <DatePickerModal
-              locale="pt"
               mode="single"
               visible={open}
               onDismiss={onDismissSingle}
@@ -185,7 +184,6 @@ export default function EditVaccine(props) {
               onPress={() => setNextOpen(true)}
             />
             <DatePickerModal
-              locale="pt"
               mode="single"
               visible={nextOpen}
               onDismiss={onDismissNextSingle}

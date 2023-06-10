@@ -88,7 +88,6 @@ export default function NewAccount(props) {
               onPress={() => setOpen(true)}
             />
             <DatePickerModal
-              locale="pt"
               mode="single"
               visible={open}
               onDismiss={onDismissSingle}

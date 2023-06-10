@@ -1,17 +1,20 @@
 import dayjs from 'dayjs';
+import {addDoc, collection} from 'firebase/firestore';
+import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import {useCallback, useState} from 'react';
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import DocumentPicker, {types} from 'react-native-document-picker';
 import 'react-native-get-random-values';
 import {DatePickerModal} from 'react-native-paper-dates';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useSelector} from 'react-redux';
 import {v4 as uuidv4} from 'uuid';
 import GreenButton from '../../components/GreenButton';
 import ImagePicker from '../../components/ImagePicker';
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
 import FormTextInput from '../../components/TextInput';
-import {VaccineData} from '../../data/mockVaccine';
+import {db, storage} from '../../firebase/firebaseApp';
 import {style} from './CreateVaccine.style';
 export default function CreateVaccine(props) {
   const radioButtomItems = [
@@ -30,7 +33,7 @@ export default function CreateVaccine(props) {
   const [open, setOpen] = useState(false);
   const [nextOpen, setNextOpen] = useState(false);
   const [fileResponse, setFileResponse] = useState(undefined);
-
+  const user = useSelector(state => state.user);
   const onDismissSingle = useCallback(() => {
     setOpen(false);
   }, [setOpen]);
@@ -71,13 +74,26 @@ export default function CreateVaccine(props) {
   }, []);
 
   const handleSubmitVaccine = async () => {
+    if (!fileResponse) {
+      Alert.alert('Erro ao cadastrar vacina', 'O comprovante é obrigatório', [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+    }
     if (!!vacina && !!dateVaccineString) {
-      VaccineData.push({
+      const file = await fetch(fileResponse);
+      const blob = await file.blob();
+      const filePath = `images/${uuidv4()}`;
+      await uploadBytes(ref(storage, filePath), blob);
+      const url = await getDownloadURL(ref(storage, filePath));
+
+      await addDoc(collection(db, 'user', user.userId, 'vaccine'), {
         id: uuidv4(),
         name: vacina,
         dose: checked,
         dateTaken: dateVaccine,
-        nextDose: nextDateVaccine,
+        nextDose: nextDateVaccine || null,
+        url,
+        filePath,
       });
     }
     props.navigation.pop();

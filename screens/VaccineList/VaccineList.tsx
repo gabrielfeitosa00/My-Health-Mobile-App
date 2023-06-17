@@ -1,3 +1,4 @@
+import {collection, onSnapshot, query} from 'firebase/firestore';
 import {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -7,11 +8,11 @@ import CardContainer from '../../components/CardContainer';
 import GreenButton from '../../components/GreenButton';
 import InputWithLabel from '../../components/InputWithLabel';
 import FormTextInput from '../../components/TextInput';
-import {VaccineData} from '../../data/mockVaccine';
+import {db} from '../../firebase/firebaseApp';
 import {style} from './VaccineList.style';
 export default function VaccineList(props) {
   const [search, setSearch] = useState('');
-  const [currentData, setCurrentData] = useState(VaccineData);
+  const [currentData, setCurrentData] = useState([]);
   const insets = useSafeAreaInsets();
   const data = [
     {
@@ -73,16 +74,56 @@ export default function VaccineList(props) {
   console.log('here', user);
   console.log('vaccine', vaccines);
   useEffect(() => {
+    const q = query(collection(db, 'user', user.userId, 'vaccine'));
+    onSnapshot(q, snapshot => {
+      const vaccine = [];
+
+      snapshot.forEach(doc => {
+        console.log(doc.data().dateTaken);
+        vaccine.push({
+          id: doc.id,
+          name: doc.data().name,
+          dose: doc.data().dose,
+          dateTaken: doc.data().dateTaken.toDate(),
+          nextDose: doc.data().nextDose ? doc.data().nextDose.toDate() : null,
+          imageUri: doc.data().url,
+        });
+      });
+
+      setCurrentData(vaccine);
+    });
+  }, []);
+  useEffect(() => {
     if (search) {
-      let filteredVaccine = VaccineData.filter(item =>
+      let filteredVaccine = currentData.filter(item =>
         item.name.includes(search),
       );
       console.log(filteredVaccine);
       setCurrentData(filteredVaccine);
     } else {
-      setCurrentData(VaccineData);
+      const q = query(collection(db, 'user', user.userId, 'vaccine'));
+      onSnapshot(q, snapshot => {
+        const vaccine = [];
+
+        snapshot.forEach(doc => {
+          console.log(doc.data().dateTaken);
+          vaccine.push({
+            id: doc.id,
+            name: doc.data().name,
+            dose: doc.data().dose,
+            dateTaken: doc.data().dateTaken.toDate(),
+            nextDose:
+              doc.data().nextDose !== null
+                ? doc.data().nextDose.toDate()
+                : null,
+            imageUri: doc.data().url,
+          });
+        });
+
+        setCurrentData(vaccine);
+      });
     }
-  }, [search, VaccineData]);
+  }, [search]);
 
   return (
     <View

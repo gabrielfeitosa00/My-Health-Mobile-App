@@ -7,12 +7,15 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import DeleteModal from '../../components/DeleteModal';
 import GreenButton from '../../components/GreenButton';
 
+import {doc, getDoc} from 'firebase/firestore';
+import {useSelector} from 'react-redux';
 import ImagePicker from '../../components/ImagePicker';
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
 import RedButton from '../../components/RedButton';
 import FormTextInput from '../../components/TextInput';
 import {VaccineData, setVaccineData} from '../../data/mockVaccine';
+import {db} from '../../firebase/firebaseApp';
 import {style} from './EditVaccine.style';
 export default function EditVaccine(props) {
   const radioButtomItems = [
@@ -32,7 +35,7 @@ export default function EditVaccine(props) {
   const [nextOpen, setNextOpen] = useState(false);
   const [fileResponse, setFileResponse] = useState(undefined);
   const [visible, setVisible] = useState(false);
-
+  const user = useSelector(state => state.user);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
   const clearInputs = () => {
@@ -59,20 +62,29 @@ export default function EditVaccine(props) {
     props.navigation.pop();
   };
   useEffect(() => {
-    const vaccine = VaccineData.filter(
-      item => item.id === props.route.params.id,
-    )[0];
+    const getVaccineById = async () => {
+      const vaccine = await getDoc(
+        doc(db, 'user', user.userId, 'vaccine', props.route.params.id),
+      );
 
-    setVacina(vaccine.name);
-    setChecked(vaccine.dose);
-    setDateVaccine(vaccine.dateTaken);
-    setDateVaccineString(dayjs(vaccine.dateTaken).format('DD/MM/YY'));
-    const nextDose = vaccine.nextDose || undefined;
-    setNextDateVaccine(nextDose);
-    setNextDateVaccineString(
-      nextDose ? dayjs(nextDose).format('DD/MM/YY') : '',
-    );
-    return clearInputs;
+      setVacina(vaccine.data().name);
+      setChecked(vaccine.data().dose);
+      setDateVaccine(vaccine.data().dateTaken.toDate());
+      setFileResponse(vaccine.data().url);
+      setDateVaccineString(
+        dayjs(vaccine.data().dateTaken.toDate()).format('DD/MM/YY'),
+      );
+      const nextDose =
+        vaccine.data().nextDose !== null
+          ? vaccine.data().nextDose.toDate()
+          : null;
+      setNextDateVaccine(nextDose);
+      setNextDateVaccineString(
+        nextDose ? dayjs(nextDose).format('DD/MM/YY') : '',
+      );
+      return clearInputs;
+    };
+    getVaccineById();
   }, []);
   const confirmDelete = () => {
     let removedVaccine = VaccineData.filter(

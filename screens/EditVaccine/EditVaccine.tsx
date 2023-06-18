@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import DeleteModal from '../../components/DeleteModal';
 import GreenButton from '../../components/GreenButton';
 
-import {doc, getDoc} from 'firebase/firestore';
+import {deleteDoc, doc, getDoc} from 'firebase/firestore';
 import {useSelector} from 'react-redux';
 import ImagePicker from '../../components/ImagePicker';
 import InputWithLabel from '../../components/InputWithLabel';
@@ -87,11 +87,19 @@ export default function EditVaccine(props) {
     getVaccineById();
   }, []);
   const confirmDelete = () => {
-    let removedVaccine = VaccineData.filter(
-      item => item.id === !props.route.params.id,
-    );
-    setVaccineData(removedVaccine);
-    props.navigation.pop();
+    const deleteVaccine = async () => {
+      const refDoc = doc(
+        db,
+        'user',
+        user.userId,
+        'vaccine',
+        props.route.params.id,
+      );
+      await deleteDoc(refDoc);
+      props.navigation.pop();
+    };
+
+    deleteVaccine();
   };
   const onDismissSingle = useCallback(() => {
     setOpen(false);

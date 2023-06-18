@@ -1,21 +1,21 @@
 import dayjs from 'dayjs';
+import {deleteDoc, doc, getDoc, updateDoc} from 'firebase/firestore';
+import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import {useCallback, useEffect, useState} from 'react';
-import {View} from 'react-native';
+import {Alert, View} from 'react-native';
 import DocumentPicker, {types} from 'react-native-document-picker';
 import {DatePickerModal} from 'react-native-paper-dates';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {useSelector} from 'react-redux';
+import {v4 as uuidv4} from 'uuid';
 import DeleteModal from '../../components/DeleteModal';
 import GreenButton from '../../components/GreenButton';
-
-import {deleteDoc, doc, getDoc} from 'firebase/firestore';
-import {useSelector} from 'react-redux';
 import ImagePicker from '../../components/ImagePicker';
 import InputWithLabel from '../../components/InputWithLabel';
 import RadioButtons from '../../components/RadioButton';
 import RedButton from '../../components/RedButton';
 import FormTextInput from '../../components/TextInput';
-import {VaccineData, setVaccineData} from '../../data/mockVaccine';
-import {db} from '../../firebase/firebaseApp';
+import {db, storage} from '../../firebase/firebaseApp';
 import {style} from './EditVaccine.style';
 export default function EditVaccine(props) {
   const radioButtomItems = [
@@ -44,22 +44,62 @@ export default function EditVaccine(props) {
     setDateVaccine(undefined);
     setNextDateVaccine(undefined);
   };
+  // const handleSubmitVaccine = async () => {
+  //   if (!!vacina && !!dateVaccineString) {
+  //     let vaccineEdited = VaccineData.filter(
+  //       item => item.id === props.route.params.id,
+  //     )[0];
+  //     let vaccineWithoutEdited = VaccineData.filter(
+  //       item => item.id !== props.route.params.id,
+  //     );
+  //     vaccineEdited.name = vacina;
+  //     vaccineEdited.dose = checked;
+  //     vaccineEdited.dateTaken = dateVaccine;
+  //     vaccineEdited.nextDose = nextDateVaccine;
+  //     vaccineWithoutEdited.push(vaccineEdited);
+  //     setVaccineData(vaccineWithoutEdited);
+  //   }
+  //   props.navigation.pop();
+  // };
   const handleSubmitVaccine = async () => {
-    if (!!vacina && !!dateVaccineString) {
-      let vaccineEdited = VaccineData.filter(
-        item => item.id === props.route.params.id,
-      )[0];
-      let vaccineWithoutEdited = VaccineData.filter(
-        item => item.id !== props.route.params.id,
-      );
-      vaccineEdited.name = vacina;
-      vaccineEdited.dose = checked;
-      vaccineEdited.dateTaken = dateVaccine;
-      vaccineEdited.nextDose = nextDateVaccine;
-      vaccineWithoutEdited.push(vaccineEdited);
-      setVaccineData(vaccineWithoutEdited);
+    if (!fileResponse) {
+      Alert.alert('Erro ao Atualizar vacina', 'O comprovante é obrigatório', [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
     }
-    props.navigation.pop();
+    try {
+      if (!!vacina && !!dateVaccineString && !!fileResponse) {
+        const file = await fetch(fileResponse);
+        const blob = await file.blob();
+        const filePath = `images/${uuidv4()}`;
+        await uploadBytes(ref(storage, filePath), blob);
+        const url = await getDownloadURL(ref(storage, filePath));
+        const refDoc = doc(
+          db,
+          'user',
+          user.userId,
+          'vaccine',
+          props.route.params.id,
+        );
+        const updateVaccine = {
+          name: vacina,
+          dose: checked,
+          dateTaken: dateVaccine,
+          nextDose: nextDateVaccine || null,
+          url,
+          filePath,
+        };
+        console.log(updateVaccine);
+        await updateDoc(refDoc, updateVaccine);
+
+        props.navigation.pop();
+      }
+    } catch (error) {
+      console.log(error);
+      Alert.alert('Erro ao atualizar vacina', JSON.stringify(error), [
+        {text: 'OK', onPress: () => console.log('OK Pressed')},
+      ]);
+    }
   };
   useEffect(() => {
     const getVaccineById = async () => {
@@ -86,7 +126,7 @@ export default function EditVaccine(props) {
     };
     getVaccineById();
   }, []);
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     const deleteVaccine = async () => {
       const refDoc = doc(
         db,
@@ -99,7 +139,7 @@ export default function EditVaccine(props) {
       props.navigation.pop();
     };
 
-    deleteVaccine();
+    await deleteVaccine();
   };
   const onDismissSingle = useCallback(() => {
     setOpen(false);

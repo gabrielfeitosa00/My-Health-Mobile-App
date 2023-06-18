@@ -44,23 +44,7 @@ export default function EditVaccine(props) {
     setDateVaccine(undefined);
     setNextDateVaccine(undefined);
   };
-  // const handleSubmitVaccine = async () => {
-  //   if (!!vacina && !!dateVaccineString) {
-  //     let vaccineEdited = VaccineData.filter(
-  //       item => item.id === props.route.params.id,
-  //     )[0];
-  //     let vaccineWithoutEdited = VaccineData.filter(
-  //       item => item.id !== props.route.params.id,
-  //     );
-  //     vaccineEdited.name = vacina;
-  //     vaccineEdited.dose = checked;
-  //     vaccineEdited.dateTaken = dateVaccine;
-  //     vaccineEdited.nextDose = nextDateVaccine;
-  //     vaccineWithoutEdited.push(vaccineEdited);
-  //     setVaccineData(vaccineWithoutEdited);
-  //   }
-  //   props.navigation.pop();
-  // };
+
   const handleSubmitVaccine = async () => {
     if (!fileResponse) {
       Alert.alert('Erro ao Atualizar vacina', 'O comprovante é obrigatório', [
